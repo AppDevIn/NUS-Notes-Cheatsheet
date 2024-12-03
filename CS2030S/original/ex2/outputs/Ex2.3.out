@@ -1,0 +1,23 @@
+1.100: C0 arrives [ ]
+1.100: C0 ordered Coffee Latte (by B0)
+1.200: C1 arrives [ ]
+1.200: C1 joined queue [ ]
+1.300: C2 arrives [ C1 ]
+1.300: C2 joined queue [ C1 ]
+1.400: C3 arrives [ C1 C2 ]
+1.400: C3 departed
+3.100: C0 served Coffee Latte (by B0)
+3.100: C0 departed
+3.100: C1 ordered Coffee Latte (by B0)
+4.000: C4 arrives [ C2 ]
+4.000: C4 joined queue [ C2 ]
+5.000: C5 arrives [ C2 C4 ]
+5.000: C5 departed
+5.100: C1 served Coffee Latte (by B0)
+5.100: C1 departed
+5.100: C2 ordered Coffee Espresso (by B0)
+7.100: C2 served Coffee Espresso (by B0)
+7.100: C2 departed
+7.100: C4 ordered Coffee Latte (by B0)
+9.100: C4 served Coffee Latte (by B0)
+9.100: C4 departed

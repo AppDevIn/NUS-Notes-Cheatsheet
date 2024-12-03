@@ -1,0 +1,12 @@
+1.000: C0 arrives [ ]
+1.000: C0 ordered Coffee Espresso (by B0)
+2.000: C0 served Coffee Espresso (by B0)
+2.000: C0 departed
+3.000: C1 arrives [ ]
+3.000: C1 ordered Coffee Latte (by B0)
+4.000: C1 served Coffee Latte (by B0)
+4.000: C1 departed
+5.000: C2 arrives [ ]
+5.000: C2 ordered Coffee Espresso (by B0)
+6.000: C2 served Coffee Espresso (by B0)
+6.000: C2 departed
