@@ -1,0 +1,16 @@
+1.000: C0 arrives [ ]
+1.000: C0 ordered (Small) Coffee Espresso (by B0 [ ])
+1.100: C1 arrives [ ]
+1.100: C1 ordered (Medium) Coffee Latte (by B1 [ ])
+2.000: C0 served (Small) Coffee Espresso (by B0 [ ])
+2.000: C0 departed
+2.100: C1 served (Medium) Coffee Latte (by B1 [ ])
+2.100: C1 departed
+2.200: C2 arrives [ ]
+2.200: C2 ordered (Large) Coffee Espresso (by B0 [ ])
+2.300: C3 arrives [ ]
+2.300: C3 ordered (Hot) Coffee Latte (by B1 [ ])
+3.200: C2 served (Large) Coffee Espresso (by B0 [ ])
+3.200: C2 departed
+3.300: C3 served (Hot) Coffee Latte (by B1 [ ])
+3.300: C3 departed

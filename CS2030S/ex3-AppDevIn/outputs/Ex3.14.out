@@ -1,0 +1,52 @@
+1.000: C0 arrives [ ]
+1.000: C0 ordered (Small) Coffee Latte (by B0 [ ])
+1.100: C1 arrives [ ]
+1.100: C1 ordered (Medium) Coffee Espresso (by B1 [ ])
+1.200: C2 arrives [ ]
+1.200: C2 ordered (Large) Coffee Espresso (by B2 [ ])
+1.300: C3 arrives [ ]
+1.300: C3 joined barista queue (at B0 [ ])
+1.400: C4 arrives [ ]
+1.400: C4 joined barista queue (at B1 [ ])
+1.500: C5 arrives [ ]
+1.500: C5 joined barista queue (at B2 [ ])
+1.600: C6 arrives [ ]
+1.600: C6 joined barista queue (at B0 [ C3 ])
+1.700: C7 arrives [ ]
+1.700: C7 joined barista queue (at B1 [ C4 ])
+1.800: C8 arrives [ ]
+1.800: C8 joined barista queue (at B2 [ C5 ])
+1.900: C9 arrives [ ]
+1.900: C9 joined barista queue (at B0 [ C3 C6 ])
+2.100: C1 served (Medium) Coffee Espresso (by B1 [ C4 C7 ])
+2.100: C1 departed
+2.100: C4 ordered (Cold) Coffee Latte (by B1 [ C7 ])
+2.200: C2 served (Large) Coffee Espresso (by B2 [ C5 C8 ])
+2.200: C2 departed
+2.200: C5 ordered (Cream) Coffee Latte (by B2 [ C8 ])
+3.000: C0 served (Small) Coffee Latte (by B0 [ C3 C6 C9 ])
+3.000: C0 departed
+3.000: C3 ordered (Hot) Coffee Latte (by B0 [ C6 C9 ])
+3.100: C4 served (Cold) Coffee Latte (by B1 [ C7 ])
+3.100: C4 departed
+3.100: C7 ordered (Medium) Coffee Espresso (by B1 [ ])
+4.000: C3 served (Hot) Coffee Latte (by B0 [ C6 C9 ])
+4.000: C3 departed
+4.000: C6 ordered (Small) Coffee Espresso (by B0 [ C9 ])
+4.200: C5 served (Cream) Coffee Latte (by B2 [ C8 ])
+4.200: C5 departed
+4.200: C8 ordered (Grande) Coffee Latte (by B2 [ ])
+5.000: C10 arrives [ ]
+5.000: C10 joined barista queue (at B1 [ ])
+5.100: C7 served (Medium) Coffee Espresso (by B1 [ C10 ])
+5.100: C7 departed
+5.100: C10 ordered (Piccolo) Coffee Latte (by B1 [ ])
+6.000: C6 served (Small) Coffee Espresso (by B0 [ C9 ])
+6.000: C6 departed
+6.000: C9 ordered (Venti) Coffee Espresso (by B0 [ ])
+6.100: C10 served (Piccolo) Coffee Latte (by B1 [ ])
+6.100: C10 departed
+6.200: C8 served (Grande) Coffee Latte (by B2 [ ])
+6.200: C8 departed
+8.000: C9 served (Venti) Coffee Espresso (by B0 [ ])
+8.000: C9 departed
