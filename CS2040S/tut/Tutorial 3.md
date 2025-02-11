@@ -1,13 +1,22 @@
 ### Problem 1. Quicksort Review
+#### Part A
 a) Suppose that the pivot choice is the median of the first, middle and last keys, can you find a bad input for QuickSort?
 
 Answer:
 1, 12, 15, 33, 2, 44, 55, 60, 10, 3. This array will produce the worst- case scenario since the median of this will be 2 this will create the partition where 1 will be the left and 12, 15, 33, 44, 55, 60, 10, 3 will be the right partition 
 
+#### Part B
 b) Are any of the partitioning algorithms we have seen for QuickSort stable? Can you design a stable partitioning algorithm? Would it be efficient?
 
 Answer:
 We can do that by manually creating two different array left and right. We will add all the elements to the left and the right side of the array depending on the value and the pivot. This ensure stability is to maintain since no swapping is done but the space efficiency does drops since it will be $O(n)$ instead of $O(1)$
+
+#### Part C
+##### Part i
+$O(n)$
+
+##### Part ii
+O(nlogk)
 
 #### Implementation Code
 
@@ -166,4 +175,20 @@ Solving this recurrence shows an overall time of $O(n \log n)$. Increasing k cha
 ### Problem 5: Integer Sort 
 
 #### Part A
-I 
+An efficient way to sort an array containing only 0’s and 1’s in  𝑂 ( 𝑛 ) time is to use two pointers. One pointer starts at the left end of the array and moves rightward, and another pointer starts at the right end of the array and moves leftward. As soon as the left pointer finds a 1, it waits; and when the right pointer finds a 0, you swap the 0 and the 1 and move both pointers inward. This single pass ensures that all 0’s migrate to the front while all 1’s move to the back of the array. Because you only use two additional variables (the pointers), the algorithm is in-place and runs in linear time. However, it is not stable, since swapping elements can change the relative order of entries that have the same key.
+
+#### Part B
+When the keys of the array lie between 0 and M, where M is small, **counting sort** is the most straightforward and efficient method to arrange the elements. You simply iterate once over the input array to tally how many times each key appears (this takes O(n) time), then produce the sorted output by writing each key the number of times it appears (this takes O(M) to iterate over possible keys, plus however many elements each key contributes, but overall O(n+M). This approach can use an auxiliary array of size M+1 to store the counts and another array to write out the sorted output, so it is not in-place but has very good time complexity.
+#### Part C
+##### Part 1
+The running time for this bit-by-bit sorting algorithm is $O(64 \cdot n) = O(n)$. You perform one linear partition pass per bit: first on the most significant bit, then on the second bit, and so on, up to the 64th bit. Since each pass takes $O(n)$ time, the total is $64 \times O(n)$, which simplifies to $O(n)$.
+##### Part 2
+This algorithm can outperform QuickSort if comparing bits is cheaper than doing general comparisons, or if the data set is large and fixed-width (64-bit) integers lend themselves well to simple bit checks. In such cases, even though QuickSort has an average $O(n \log n)$ running time, the constant factors for this bit-based approach might be lower, making it faster in practice. However, on typical modern hardware, optimized QuickSort implementations are often quite fast, so whether this bit-partition method is actually faster depends on the specific environment and data.
+##### Part 3
+If you want to test this approach, you can write a program that, for each bit position from most significant to least significant, uses a linear pass to group all numbers with a 0 in that bit before those with a 1 in that bit, effectively partitioning the array in-place. After running it on sample arrays (e.g., random 64-bit integers), you can compare its speed to a standard library’s QuickSort function to see if it offers practical benefits for your use case.
+
+#### Part D
+You can swap out the linear partition step used in part (c) with a counting-sort-like subroutine from part (b), potentially improving some cases by leveraging a counting approach on the current bit values (0 or 1). However, this requires additional space for counts and can introduce overhead for each bit level. The trade-offs revolve around balancing extra memory allocations and counting operations versus the simple pointer swaps of an in-place partition; in some scenarios, especially where memory is limited or the data distribution does not favor counting, the original partition approach could still be preferable.
+
+
+
