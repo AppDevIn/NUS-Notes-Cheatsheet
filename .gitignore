@@ -1,1 +1,74 @@
 .DS_STORE
+# Ignore compiled Java class files
+*.class
+
+# Ignore log files and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignore build directories
+bin/
+build/
+target/
+out/
+
+# Ignore dependency directories (Maven, Gradle)
+.mvn/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+build/
+
+# Ignore IDE specific files (Eclipse, IntelliJ, VS Code)
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# VS Code
+.vscode/
+
+# Ignore JAR/WAR/EAR files
+*.jar
+*.war
+*.ear
+
+# Ignore generated Javadoc
+doc/
+
+# Ignore package manager files (Node modules for hybrid projects)
+node_modules/
+
+# Ignore database files
+*.sqlite
+*.db
+
+# Ignore environment variables and credentials
+.env
+*.key
+*.pem
+*.p12
+
+# Ignore OS-specific files (macOS, Windows)
+.DS_Store
+Thumbs.db
+
+**/__MACOSX/
+
