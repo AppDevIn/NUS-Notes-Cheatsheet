@@ -110,7 +110,9 @@ public class Trie {
 
             for (TrieNode child : node.children) {
                 if (child != null) {
-                    prefixSearch(s, pos, results, child, new StringBuilder(stringBuilder).append(child.data), limit);
+                    int len = stringBuilder.length();
+                    prefixSearch(s, pos, results, child, stringBuilder.append(child.data), limit);
+                    stringBuilder.setLength(len);
                 }
 
                 if (limit[0] <= 0) {
@@ -124,14 +126,17 @@ public class Trie {
 
         if (c != this.WILDCARD) {
             TrieNode child = node.getChild(this.charToPos(c));
-            if (child != null)
-                prefixSearch(s, pos + 1, results, child, new StringBuilder(stringBuilder).append(child.data), limit);
+            if (child != null) {
+                prefixSearch(s, pos + 1, results, child, stringBuilder.append(child.data), limit);
+                stringBuilder.setLength(stringBuilder.length()-1);
+            }
             return;
         }
 
         for (TrieNode child : node.children) {
             if (child != null) {
-                prefixSearch(s, pos + 1, results, child, new StringBuilder(stringBuilder).append(child.data), limit);
+                prefixSearch(s, pos + 1, results, child, stringBuilder.append(child.data), limit);
+                stringBuilder.setLength(stringBuilder.length()-1);
             }
         }
     }
