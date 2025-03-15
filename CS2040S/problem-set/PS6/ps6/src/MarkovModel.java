@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This is the main class for your Markov Model.
@@ -50,7 +52,6 @@ public class MarkovModel {
 
 			hashMap.putIfAbsent(key, new HashMap<>());
 			hashMap.get(key).put(value, hashMap.get(key).getOrDefault(value, 0) + 1);
-			hashMap.get(key).put('@', hashMap.get(key).getOrDefault('@', 0) + 1);
 			i++;
 		}
 	}
@@ -59,7 +60,7 @@ public class MarkovModel {
 	 * Returns the number of times the specified kgram appeared in the text.
 	 */
 	public int getFrequency(String kgram) {
-		return hashMap.get(kgram).get('@');
+		return  hashMap.get(kgram).values().stream().mapToInt(Integer::intValue).sum();
 	}
 
 	/**
@@ -77,6 +78,20 @@ public class MarkovModel {
 	public char nextCharacter(String kgram) {
 		// See the problem set description for details
 		// on how to make the random selection.
-		return 'a';
+		HashMap<Character, Integer> freq = hashMap.get(kgram);
+
+		if (freq == null) return this.NOCHARACTER;
+
+		int size =  freq.values().stream().mapToInt(Integer::intValue).sum();
+		int randomNum = this.generator.nextInt(size);
+
+
+		AtomicInteger curr = new AtomicInteger(0);
+		return freq.entrySet().stream()
+				.sorted(Map.Entry.comparingByKey())
+				.filter(entry -> curr.addAndGet(entry.getValue()) > randomNum)
+				.map(Map.Entry::getKey)
+				.findFirst()
+				.orElse(this.NOCHARACTER);
 	}
 }
