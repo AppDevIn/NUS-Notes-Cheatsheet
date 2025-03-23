@@ -114,7 +114,7 @@ public class MazeSolverNaive implements IMazeSolver {
 
 			solver.initialize(maze);
 			System.out.println(solver.pathSearch(0, 0, 3, 3));
-			MazePrinter.printMaze(maze);
+			ImprovedMazePrinter.printMaze(maze, 0, 0);
 
 			System.out.println();
 
