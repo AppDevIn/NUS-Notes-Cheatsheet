@@ -106,7 +106,6 @@ public class MazeSolver implements IMazeSolver {
 			default -> false;
 		};
 	}
-
 	private void highlightPath(int startR, int startC, int targetR, int targetC) {
 		int r = targetR, c = targetC;
 		while (!(r == startR && c == startC)) {
