@@ -3,10 +3,7 @@ import java.util.*;
 public class MazeSolverWithPower implements IMazeSolverWithPower {
 	private static final int NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3;
 	private static int[][] DELTAS = new int[][] {
-			{ -1, 0 }, // North
-			{ 1, 0 }, // South
-			{ 0, 1 }, // East
-			{ 0, -1 } // West
+			{ -1, 0 }, { 1, 0 }, { 0, 1 }, { 0, -1 }
 	};
 	private Maze mazeRef;
 	private int[][] visited;
@@ -16,7 +13,6 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 	@Override
 	public void initialize(Maze maze) {
 		this.mazeRef = maze;
-
 		int totalRows = maze.getRows();
 		int totalCols = maze.getColumns();
 
@@ -27,54 +23,7 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 
 	@Override
 	public Integer pathSearch(int startR, int startC, int targetR, int targetC) throws Exception {
-		if (mazeRef == null) throw new Exception("Maze is not initialized!");
-
-		if (!withinBounds(startR, startC) || !withinBounds(targetR, targetC)) {
-			throw new IllegalArgumentException("Start or end point is out of maze bounds.");
-		}
-
-		int R = mazeRef.getRows();
-		int C = mazeRef.getColumns();
-
-		for (int i = 0; i < R; i++) {
-			for (int j = 0; j < C; j++) {
-				visited[i][j] = -1;
-				cameFrom[i][j] = null;
-				mazeRef.getRoom(i, j).onPath = false;
-			}
-		}
-
-		exploredPerLevel.clear();
-
-		Queue<int[]> queue = new LinkedList<>();
-		queue.add(new int[]{startR, startC});
-		visited[startR][startC] = 0;
-
-		while (!queue.isEmpty()) {
-			int batchSize = queue.size();
-			exploredPerLevel.add(batchSize);
-
-			while (batchSize-- > 0) {
-				int[] cell = queue.poll();
-				int r = cell[0], c = cell[1];
-
-				for (int d = 0; d < 4; d++) {
-					int nextR = r + DELTAS[d][0];
-					int nextC = c + DELTAS[d][1];
-
-					if (!withinBounds(nextR, nextC) || visited[nextR][nextC] != -1) continue;
-					if (!canTraverse(r, c, d)) continue;
-
-					cameFrom[nextR][nextC] = mazeRef.getRoom(r, c);
-					visited[nextR][nextC] = visited[r][c] + 1;
-					queue.add(new int[]{nextR, nextC});
-				}
-			}
-		}
-
-		if (visited[targetR][targetC] == -1) return null;
-		highlightPath(startR, startC, targetR, targetC);
-		return visited[targetR][targetC];
+		return this.pathSearch(startR, startC, targetR, targetC, 0);
 	}
 
 	@Override
@@ -85,22 +34,23 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 	@Override
 	public Integer pathSearch(int startRow, int startCol, int endRow, int endCol, int superpowers) throws Exception {
 		if (mazeRef == null) throw new Exception("Maze is not initialized!");
-
 		if (!withinBounds(startRow, startCol) || !withinBounds(endRow, endCol)) {
 			throw new IllegalArgumentException("Start or end point is out of maze bounds.");
 		}
 
-
-
 		int R = mazeRef.getRows();
 		int C = mazeRef.getColumns();
 		boolean[][][] visited = new boolean[R][C][superpowers + 1];
-		int[][][][] cameFromPower = new int[R][C][superpowers + 1][3];;
+		int[][][][] cameFromPower = new int[R][C][superpowers + 1][3];
+
 		exploredPerLevel.clear();
 
 		Queue<int[]> queue = new LinkedList<>();
 		queue.add(new int[] { startRow, startCol, superpowers, 0 });
 		visited[startRow][startCol][superpowers] = true;
+
+		int bestPowerLeft = -1;
+		int bestDistance = -1;
 
 		while (!queue.isEmpty()) {
 			int batchSize = queue.size();
@@ -111,9 +61,11 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 				int r = curr[0], c = curr[1], powersLeft = curr[2], dist = curr[3];
 
 				if (r == endRow && c == endCol) {
-					highlightPath(startRow, startCol, r, c, cameFromPower, powersLeft);
-					return dist;
+					bestPowerLeft = powersLeft;
+					bestDistance = dist;
 				}
+
+
 
 				for (int d = 0; d < 4; d++) {
 					int nextR = r + DELTAS[d][0];
@@ -123,17 +75,35 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 					boolean hasWall = !canTraverse(r, c, d);
 					if (hasWall && powersLeft > 0 && !visited[nextR][nextC][powersLeft - 1]) {
 						visited[nextR][nextC][powersLeft - 1] = true;
-						cameFromPower[nextR][nextC][powersLeft - 1] = new int[]{r, c, powersLeft};;
-						queue.add(new int[]{ nextR, nextC, powersLeft - 1, dist + 1 });
+						cameFromPower[nextR][nextC][powersLeft - 1] = new int[] { r, c, powersLeft };
+						queue.add(new int[] { nextR, nextC, powersLeft - 1, dist + 1 });
 					} else if (!hasWall && !visited[nextR][nextC][powersLeft]) {
 						visited[nextR][nextC][powersLeft] = true;
-						cameFromPower[nextR][nextC][powersLeft] = new int[]{r, c, powersLeft};;
-						queue.add(new int[]{ nextR, nextC, powersLeft, dist + 1 });
+						cameFromPower[nextR][nextC][powersLeft] = new int[] { r, c, powersLeft };
+						queue.add(new int[] { nextR, nextC, powersLeft, dist + 1 });
 					}
 				}
 			}
 		}
+
+		if (bestPowerLeft != -1) {
+			highlightPath(startRow, startCol, endRow, endCol, cameFromPower, bestPowerLeft);
+			return bestDistance;
+		}
 		return null;
+	}
+
+	private void highlightPath(int startR, int startC, int targetR, int targetC,
+							   int[][][][] cameFromPower, int finalPower) {
+		int r = targetR, c = targetC, power = finalPower;
+		while (!(r == startR && c == startC)) {
+			mazeRef.getRoom(r, c).onPath = true;
+			int[] prev = cameFromPower[r][c][power];
+			r = prev[0];
+			c = prev[1];
+			power = prev[2];
+		}
+		mazeRef.getRoom(startR, startC).onPath = true;
 	}
 
 	private boolean withinBounds(int r, int c) {
@@ -150,38 +120,4 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 			default -> false;
 		};
 	}
-
-	private void highlightPath(int startR, int startC, int targetR, int targetC) {
-		int r = targetR, c = targetC;
-		while (!(r == startR && c == startC)) {
-			mazeRef.getRoom(r, c).onPath = true;
-			Room from = cameFrom[r][c];
-			boolean backtracked = false;
-
-			for (int d = 0; d < 4 && !backtracked; d++) {
-				int pr = r - DELTAS[d][0], pc = c - DELTAS[d][1];
-				if (withinBounds(pr, pc) && mazeRef.getRoom(pr, pc) == from) {
-					r = pr;
-					c = pc;
-					backtracked = true;
-				}
-			}
-		}
-		mazeRef.getRoom(startR, startC).onPath = true;
-	}
-
-	private void highlightPath(int startR, int startC, int targetR, int targetC,
-							   int[][][][] cameFromPower, int finalPower) {
-		int r = targetR, c = targetC, power = finalPower;
-		while (!(r == startR && c == startC)) {
-			mazeRef.getRoom(r, c).onPath = true;
-			int[] prev = cameFromPower[r][c][power];
-			r = prev[0];
-			c = prev[1];
-			power = prev[2];  // This is the fix
-		}
-		mazeRef.getRoom(startR, startC).onPath = true;
-	}
-
-
 }
