@@ -28,13 +28,16 @@ public class MazeSolver implements IMazeSolver {
 
 	@Override
 	public Integer pathSearch(int startRow, int startCol, int endRow, int endCol) throws Exception {
-		if (maze == null) throw new Exception("Maze not initialized");
+		if (maze == null) throw new Exception("Maze has not been initialized");
 
 		int rows = maze.getRows();
 		int cols = maze.getColumns();
 
 		int[][] fear = new int[rows][cols];
-		for (int[] row : fear) Arrays.fill(row, Integer.MAX_VALUE);
+		for (int[] row : fear) {
+			Arrays.fill(row, Integer.MAX_VALUE);
+		}
+
 		fear[startRow][startCol] = 0;
 
 		PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[2]));
