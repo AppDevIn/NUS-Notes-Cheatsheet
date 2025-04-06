@@ -24,10 +24,10 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 	}
 
 	@Override
-	public Integer pathSearch(int sr, int sc, int er, int ec, int superpowers) throws Exception {
+	public Integer pathSearch(int startRow, int startCol, int endRow, int endCol, int superpowers) throws Exception {
 		if (maze == null)
 			throw new Exception("Oh no! You cannot call me without initializing the maze!");
-		if (!inBounds(sr, sc) || !inBounds(er, ec))
+		if (!inBounds(startRow, startCol) || !inBounds(endRow, endCol))
 			throw new IllegalArgumentException("Start or end point is out of maze bounds.");
 
 		resetMazeState();
@@ -37,33 +37,33 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 		cameFrom = new int[rows][cols][superpowers + 1][3];
 
 		Queue<int[]> queue = new LinkedList<>();
-		queue.offer(new int[]{sr, sc, superpowers, 0});
-		visited[sr][sc][superpowers] = true;
-		counted[sr][sc] = true;
+		queue.offer(new int[]{startRow, startCol, superpowers, 0});
+		visited[startRow][startCol][superpowers] = true;
+		counted[startRow][startCol] = true;
 		reachable[0]++;
 
-		int[] endPos = bfsWithPowers(queue, visited, counted, sr, sc, er, ec);
+		int[] endPos = bfsWithPowers(queue, visited, counted, endRow, endCol);
 
 		if (endPos == null) return null;
 
-		highlightPath(sr, sc, endPos[0], endPos[1], endPos[2]);
+		highlightPath(startRow, startCol, endPos[0], endPos[1], endPos[2]);
 		return endPos[3];
 	}
 
-	private void highlightPath(int sr, int sc, int r, int c, int power) {
-		while (!(r == sr && c == sc)) {
-			maze.getRoom(r, c).onPath = true;
-			int[] prev = cameFrom[r][c][power];
-			r = prev[0];
-			c = prev[1];
+	private void highlightPath(int startRow, int startCol, int row, int col, int power) {
+		while (!(row == startRow && col == startCol)) {
+			maze.getRoom(row, col).onPath = true;
+			int[] prev = cameFrom[row][col][power];
+			row = prev[0];
+			col = prev[1];
 			power = prev[2];
 		}
-		maze.getRoom(sr, sc).onPath = true;
+		maze.getRoom(startRow, startCol).onPath = true;
 	}
 
 	@Override
-	public Integer pathSearch(int sr, int sc, int er, int ec) throws Exception {
-		return pathSearch(sr, sc, er, ec, 0);
+	public Integer pathSearch(int startRow, int startCol, int endRow, int endCol) throws Exception {
+		return this.pathSearch(startRow, startCol, endRow, endCol, 0);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 	}
 
 	private int[] bfsWithPowers(Queue<int[]> queue, boolean[][][] visited, boolean[][] counted,
-								int sr, int sc, int er, int ec) {
+								int endRow, int endCol) {
 
 		int[] endPos = null;
 
@@ -86,26 +86,26 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 			int[] curr = queue.poll();
 			int r = curr[0], c = curr[1], power = curr[2], step = curr[3];
 
-			if (r == er && c == ec && endPos == null)
+			if (r == endRow && c == endCol && endPos == null)
 				endPos = curr;
 
 			for (int d = 0; d < 4; d++) {
-				int nr = r + DELTAS[d][0];
-				int nc = c + DELTAS[d][1];
+				int newRow = r + DELTAS[d][0];
+				int newCol = c + DELTAS[d][1];
 
-				if (!inBounds(nr, nc)) continue;
+				if (!inBounds(newRow, newCol)) continue;
 
 				boolean wall = canTraverse(r, c, d);
 				int np = wall ? power - 1 : power;
 
-				if (np < 0 || visited[nr][nc][np]) continue;
+				if (np < 0 || visited[newRow][newCol][np]) continue;
 
-				visited[nr][nc][np] = true;
-				cameFrom[nr][nc][np] = new int[]{r, c, power};
-				queue.offer(new int[]{nr, nc, np, step + 1});
+				visited[newRow][newCol][np] = true;
+				cameFrom[newRow][newCol][np] = new int[]{r, c, power};
+				queue.offer(new int[]{newRow, newCol, np, step + 1});
 
-				if (!counted[nr][nc]) {
-					counted[nr][nc] = true;
+				if (!counted[newRow][newCol]) {
+					counted[newRow][newCol] = true;
 					reachable[step + 1]++;
 				}
 			}
