@@ -34,7 +34,8 @@ public class MazeSolver implements IMazeSolver {
 		int cols = maze.getColumns();
 
 		int[][] fear = new int[rows][cols];
-		for (int[] row : fear) Arrays.fill(row, Integer.MAX_VALUE);
+		for (int[] row : fear)
+			Arrays.fill(row, Integer.MAX_VALUE);
 		fear[startRow][startCol] = 0;
 
 		PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[2]));
@@ -82,7 +83,52 @@ public class MazeSolver implements IMazeSolver {
 
 	@Override
 	public Integer bonusSearch(int startRow, int startCol, int endRow, int endCol) throws Exception {
-		// Not implemented
+		if (maze == null) throw new Exception("Maze not initialized");
+
+		int rows = maze.getRows();
+		int cols = maze.getColumns();
+
+		int[][] fear = new int[rows][cols];
+		for (int[] row : fear)
+			Arrays.fill(row, Integer.MAX_VALUE);
+		fear[startRow][startCol] = 0;
+
+		PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[2]));
+		priorityQueue.offer(new int[] {startRow, startCol, 0});
+
+		while (!priorityQueue.isEmpty()) {
+			int[] curr = priorityQueue.poll();
+			int row = curr[0];
+			int col = curr[1];
+			int currFear = curr[2];
+
+			if (row == endRow && col == endCol) return currFear;
+
+			int dir = 0;
+			for (int[] del : DELTAS) {
+				int newRow = row + del[0];
+				int newCol = col + del[1];
+
+				if (!inBounds(newRow, newCol, rows, cols)) {
+					dir++;
+					continue;
+				}
+
+				Room currentRoom = maze.getRoom(row, col);
+				int wallCost = WALL_FUNCTIONS.get(dir).apply(currentRoom);
+				dir++;
+
+				if (wallCost == TRUE_WALL) continue;
+
+				int newFear = calculateBonusFear(currFear, wallCost);
+
+				if (newFear >= fear[newRow][newCol]) continue;
+
+				fear[newRow][newCol] = newFear;
+				priorityQueue.offer(new int[] {newRow, newCol, newFear});
+			}
+		}
+
 		return null;
 	}
 
@@ -101,6 +147,14 @@ public class MazeSolver implements IMazeSolver {
 			return currentFear + 1;
 		} else {
 			return currentFear + wall;
+		}
+	}
+
+	private int calculateBonusFear(int currentFear, int wall) {
+		if (wall == EMPTY_SPACE) {
+			return currentFear + 1;
+		} else {
+			return Math.max(currentFear, wall);
 		}
 	}
 }
