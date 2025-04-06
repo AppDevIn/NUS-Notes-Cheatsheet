@@ -41,4 +41,17 @@ public class Room {
 	public boolean hasSouthWall() {
 		return southWall;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+
+		Room other = (Room) obj;
+		return this.hasNorthWall() == other.hasNorthWall()
+				&& this.hasSouthWall() == other.hasSouthWall()
+				&& this.hasEastWall() == other.hasEastWall()
+				&& this.hasWestWall() == other.hasWestWall()
+				&& this.onPath == other.onPath; // or remove if comparing structure only
+	}
 }

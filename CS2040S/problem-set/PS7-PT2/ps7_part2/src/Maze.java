@@ -107,4 +107,26 @@ public class Maze {
 
 		return maze;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+
+		Maze other = (Maze) obj;
+
+		if (this.getRows() != other.getRows() || this.getColumns() != other.getColumns()) {
+			return false;
+		}
+
+		for (int i = 0; i < this.getRows(); i++) {
+			for (int j = 0; j < this.getColumns(); j++) {
+				if (!this.getRoom(i, j).equals(other.getRoom(i, j))) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 }

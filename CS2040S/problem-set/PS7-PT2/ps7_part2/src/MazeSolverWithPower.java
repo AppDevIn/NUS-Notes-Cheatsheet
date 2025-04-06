@@ -1,123 +1,116 @@
 import java.util.*;
 
 public class MazeSolverWithPower implements IMazeSolverWithPower {
-	private static final int NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3;
-	private static int[][] DELTAS = new int[][] {
-			{ -1, 0 }, { 1, 0 }, { 0, 1 }, { 0, -1 }
+
+	private static final int[][] DELTAS = {
+			{-1, 0}, // North
+			{1, 0},  // South
+			{0, 1},  // East
+			{0, -1}  // West
 	};
-	private Maze mazeRef;
-	private int[][] visited;
-	private Room[][] cameFrom;
-	private List<Integer> exploredPerLevel;
+
+	private Maze maze;
+	private int rows, cols;
+	private int[] reachable;
+	private int[][][][] cameFrom;
 
 	@Override
 	public void initialize(Maze maze) {
-		this.mazeRef = maze;
-		int totalRows = maze.getRows();
-		int totalCols = maze.getColumns();
-
-		visited = new int[totalRows][totalCols];
-		cameFrom = new Room[totalRows][totalCols];
-		exploredPerLevel = new ArrayList<>();
+		this.maze = maze;
+		this.rows = maze.getRows();
+		this.cols = maze.getColumns();
+		this.reachable = new int[rows * cols];
 	}
 
 	@Override
-	public Integer pathSearch(int startR, int startC, int targetR, int targetC) throws Exception {
-		return this.pathSearch(startR, startC, targetR, targetC, 0);
-	}
+	public Integer pathSearch(int sr, int sc, int er, int ec, int superpowers) throws Exception {
+		if (maze == null) throw new Exception("Maze not initialized");
+		if (!inBounds(sr, sc) || !inBounds(er, ec)) throw new IllegalArgumentException("Invalid coordinates");
 
-	@Override
-	public Integer numReachable(int k) throws Exception {
-		return (k >= 0 && k < exploredPerLevel.size()) ? exploredPerLevel.get(k) : 0;
-	}
+		for (int r = 0; r < rows; r++)
+			for (int c = 0; c < cols; c++)
+				maze.getRoom(r, c).onPath = false;
 
-	@Override
-	public Integer pathSearch(int startRow, int startCol, int endRow, int endCol, int superpowers) throws Exception {
-		if (mazeRef == null) throw new Exception("Maze is not initialized!");
-		if (!withinBounds(startRow, startCol) || !withinBounds(endRow, endCol)) {
-			throw new IllegalArgumentException("Start or end point is out of maze bounds.");
-		}
-
-		int R = mazeRef.getRows();
-		int C = mazeRef.getColumns();
-		boolean[][][] visited = new boolean[R][C][superpowers + 1];
-		int[][][][] cameFromPower = new int[R][C][superpowers + 1][3];
-
-		exploredPerLevel.clear();
+		Arrays.fill(reachable, 0);
+		boolean[][][] visited = new boolean[rows][cols][superpowers + 1];
+		boolean[][] counted = new boolean[rows][cols];
+		cameFrom = new int[rows][cols][superpowers + 1][3]; // [row][col][power] = {prevRow, prevCol, prevPower}
 
 		Queue<int[]> queue = new LinkedList<>();
-		queue.add(new int[] { startRow, startCol, superpowers, 0 });
-		visited[startRow][startCol][superpowers] = true;
+		queue.offer(new int[]{sr, sc, superpowers, 0});
+		visited[sr][sc][superpowers] = true;
+		counted[sr][sc] = true;
+		reachable[0]++;
 
-		int bestPowerLeft = -1;
-		int bestDistance = -1;
+		int[] endPos = null;
 
 		while (!queue.isEmpty()) {
-			int batchSize = queue.size();
-			exploredPerLevel.add(batchSize);
+			int[] curr = queue.poll();
+			int r = curr[0], c = curr[1], power = curr[2], step = curr[3];
 
-			while (batchSize-- > 0) {
-				int[] curr = queue.poll();
-				int r = curr[0], c = curr[1], powersLeft = curr[2], dist = curr[3];
+			if (r == er && c == ec && endPos == null)
+				endPos = curr;
 
-				if (r == endRow && c == endCol) {
-					bestPowerLeft = powersLeft;
-					bestDistance = dist;
-				}
+			for (int d = 0; d < 4; d++) {
+				int nr = r + DELTAS[d][0], nc = c + DELTAS[d][1];
+				if (!inBounds(nr, nc)) continue;
 
+				boolean wall = isBlocked(r, c, d);
+				int np = wall ? power - 1 : power;
+				if (np < 0 || visited[nr][nc][np]) continue;
 
+				visited[nr][nc][np] = true;
+				cameFrom[nr][nc][np] = new int[]{r, c, power};
+				queue.offer(new int[]{nr, nc, np, step + 1});
 
-				for (int d = 0; d < 4; d++) {
-					int nextR = r + DELTAS[d][0];
-					int nextC = c + DELTAS[d][1];
-					if (!withinBounds(nextR, nextC)) continue;
-
-					boolean hasWall = !canTraverse(r, c, d);
-					if (hasWall && powersLeft > 0 && !visited[nextR][nextC][powersLeft - 1]) {
-						visited[nextR][nextC][powersLeft - 1] = true;
-						cameFromPower[nextR][nextC][powersLeft - 1] = new int[] { r, c, powersLeft };
-						queue.add(new int[] { nextR, nextC, powersLeft - 1, dist + 1 });
-					} else if (!hasWall && !visited[nextR][nextC][powersLeft]) {
-						visited[nextR][nextC][powersLeft] = true;
-						cameFromPower[nextR][nextC][powersLeft] = new int[] { r, c, powersLeft };
-						queue.add(new int[] { nextR, nextC, powersLeft, dist + 1 });
-					}
+				if (!counted[nr][nc]) {
+					counted[nr][nc] = true;
+					reachable[step + 1]++;
 				}
 			}
 		}
 
-		if (bestPowerLeft != -1) {
-			highlightPath(startRow, startCol, endRow, endCol, cameFromPower, bestPowerLeft);
-			return bestDistance;
-		}
-		return null;
+		if (endPos == null) return null;
+
+		tracePath(sr, sc, endPos[0], endPos[1], endPos[2]);
+		return endPos[3];
 	}
 
-	private void highlightPath(int startR, int startC, int targetR, int targetC,
-							   int[][][][] cameFromPower, int finalPower) {
-		int r = targetR, c = targetC, power = finalPower;
-		while (!(r == startR && c == startC)) {
-			mazeRef.getRoom(r, c).onPath = true;
-			int[] prev = cameFromPower[r][c][power];
+	private void tracePath(int sr, int sc, int r, int c, int power) {
+		while (!(r == sr && c == sc)) {
+			maze.getRoom(r, c).onPath = true;
+			int[] prev = cameFrom[r][c][power];
 			r = prev[0];
 			c = prev[1];
 			power = prev[2];
 		}
-		mazeRef.getRoom(startR, startC).onPath = true;
+		maze.getRoom(sr, sc).onPath = true;
 	}
 
-	private boolean withinBounds(int r, int c) {
-		return r >= 0 && r < mazeRef.getRows() && c >= 0 && c < mazeRef.getColumns();
+	@Override
+	public Integer pathSearch(int sr, int sc, int er, int ec) throws Exception {
+		return pathSearch(sr, sc, er, ec, 0);
 	}
 
-	private boolean canTraverse(int r, int c, int dir) {
-		Room current = mazeRef.getRoom(r, c);
+	@Override
+	public Integer numReachable(int k) throws Exception {
+		if (maze == null) throw new Exception("Maze not initialized");
+		if (k < 0 || k >= reachable.length) return 0;
+		return reachable[k];
+	}
+
+	private boolean inBounds(int r, int c) {
+		return r >= 0 && r < rows && c >= 0 && c < cols;
+	}
+
+	private boolean isBlocked(int r, int c, int dir) {
+		Room room = maze.getRoom(r, c);
 		return switch (dir) {
-			case 0 -> !current.hasNorthWall();
-			case 1 -> !current.hasSouthWall();
-			case 2 -> !current.hasEastWall();
-			case 3 -> !current.hasWestWall();
-			default -> false;
+			case 0 -> room.hasNorthWall();
+			case 1 -> room.hasSouthWall();
+			case 2 -> room.hasEastWall();
+			case 3 -> room.hasWestWall();
+			default -> true;
 		};
 	}
 }
