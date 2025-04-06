@@ -51,7 +51,7 @@ public class MazeSolver implements IMazeSolver {
 				int newRow = r + del[0];
 				int newCol = c + del[1];
 
-				if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols) {
+				if (!inBounds(newRow, newCol, rows, cols)) {
 					dir++;
 					continue;
 				}
@@ -85,5 +85,9 @@ public class MazeSolver implements IMazeSolver {
 	public Integer bonusSearch(int startRow, int startCol, int endRow, int endCol, int sRow, int sCol) throws Exception {
 		// Not implemented
 		return null;
+	}
+
+	private boolean inBounds(int row, int col, int rows, int cols) {
+		return row >= 0 && row < rows && col >= 0 && col < cols;
 	}
 }
