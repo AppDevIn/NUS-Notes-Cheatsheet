@@ -41,34 +41,39 @@ public class MazeSolver implements IMazeSolver {
 		priorityQueue.offer(new int[] {startRow, startCol, 0});
 
 		while (!priorityQueue.isEmpty()) {
-			int[] curr = priorityQueue.poll();
-			int r = curr[0], c = curr[1], currFear = curr[2];
 
-			if (r == endRow && c == endCol) return currFear;
+			int[] curr = priorityQueue.poll();
+
+			int row = curr[0];
+			int col = curr[1];
+			int currFear = curr[2];
+
+			if (row == endRow && col == endCol) return currFear;
 
 			int dir = 0;
 			for (int[] del : DELTAS) {
-				int newRow = r + del[0];
-				int newCol = c + del[1];
+				int newRow = row + del[0];
+				int newCol = col + del[1];
 
 				if (!inBounds(newRow, newCol, rows, cols)) {
 					dir++;
 					continue;
 				}
 
-				Room currentRoom = maze.getRoom(r, c);
+				Room currentRoom = maze.getRoom(row, col);
 				int wallCost = WALL_FUNCTIONS.get(dir).apply(currentRoom);
 				dir++;
 
-				if (wallCost == TRUE_WALL) continue;
+				if (wallCost == TRUE_WALL)
+					continue;
 
-				int stepFear = (wallCost == EMPTY_SPACE) ? 1 : wallCost;
-				int newFear = currFear + stepFear;
+				int newFear = calculateFear(currFear, wallCost);
 
-				if (newFear < fear[newRow][newCol]) {
-					fear[newRow][newCol] = newFear;
-					priorityQueue.offer(new int[] {newRow, newCol, newFear});
-				}
+				if (newFear >= fear[newRow][newCol])
+					continue;
+
+				fear[newRow][newCol] = newFear;
+				priorityQueue.offer(new int[] {newRow, newCol, newFear});
 			}
 		}
 
@@ -89,5 +94,13 @@ public class MazeSolver implements IMazeSolver {
 
 	private boolean inBounds(int row, int col, int rows, int cols) {
 		return row >= 0 && row < rows && col >= 0 && col < cols;
+	}
+
+	private int calculateFear(int currentFear, int wall) {
+		if (wall == EMPTY_SPACE) {
+			return currentFear + 1;
+		} else {
+			return currentFear + wall;
+		}
 	}
 }
