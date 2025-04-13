@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 class Node {
@@ -87,7 +89,44 @@ public class TSPGraph implements IApproximateTSP {
     @Override
     public void TSP(TSPMap map) {
         MST(map);
-        // TODO: implement the rest of this method.
+
+        int cities = map.getCount();
+
+        List<Integer>[] adjList = new ArrayList[cities];
+        for (int i = 0; i < cities; i++) {
+            adjList[i] = new ArrayList<>();
+        }
+        for (int i = 1; i < cities; i++) {
+            adjList[i].add(parent[i]);
+            adjList[parent[i]].add(i);
+        }
+
+        boolean[] visited = new boolean[cities];
+        List<Integer> path = new ArrayList<>();
+        dfs(0, adjList, path, visited);
+
+
+        for (int i = 0; i < path.size() - 1; i++) {
+            map.setLink(path.get(i), path.get(i + 1), false);
+        }
+
+        map.setLink(path.get(path.size() - 1), 0, false);
+
+        map.redraw();
+    }
+
+    private void dfs(int current, List<Integer>[] adjList, List<Integer> path,  boolean[] visited ) {
+
+        visited[current] = true;
+        path.add(current);
+
+        for (Integer i:adjList[current]) {
+            if(!visited[i]) {
+                dfs(i, adjList, path, visited);
+            }
+        }
+
+
     }
 
     @Override
@@ -109,7 +148,7 @@ public class TSPGraph implements IApproximateTSP {
         TSPGraph graph = new TSPGraph();
 
         graph.MST(map);
-        // graph.TSP(map);
+        graph.TSP(map);
         // System.out.println(graph.isValidTour(map));
         // System.out.println(graph.tourDistance(map));
     }
