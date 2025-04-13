@@ -131,25 +131,54 @@ public class TSPGraph implements IApproximateTSP {
 
     @Override
     public boolean isValidTour(TSPMap map) {
-        // Note: this function should with with *any* map, and not just results from TSP().
-        // TODO: implement this method
-        return false;
+        if (map == null || map.getCount() == 0)
+            return false;
+
+        int n = map.getCount();
+        boolean[] visited = new boolean[n];
+        int currCity = 0;
+        int cityVisited = 0;
+
+        while (!visited[currCity]) {
+            visited[currCity] = true;
+            cityVisited++;
+            currCity = map.getPoint(currCity).getLink();
+            if (currCity == -1) return false;
+        }
+
+        return currCity == 0 && cityVisited == n;
     }
 
     @Override
     public double tourDistance(TSPMap map) {
-        // Note: this function should with with *any* map, and not just results from TSP().
-        // TODO: implement this method
-        return 0;
+        // Note: this function should with *any* map, and not just results from TSP().
+
+        if (!isValidTour(map))
+            return -1;
+
+        Double distance = 0.0;
+
+        return tourDistance(0, distance);
+
+    }
+
+    private double tourDistance(int currCity, Double distance){
+        int nextCity = map.getPoint(currCity).getLink();
+        double newDistance = map.pointDistance(currCity, nextCity) + distance;
+        if (nextCity == 0)
+            return newDistance;
+
+        return tourDistance(nextCity, newDistance);
+
     }
 
     public static void main(String[] args) {
-        TSPMap map = new TSPMap(args.length > 0 ? args[0] : "fiftypoints.txt");
+        TSPMap map = new TSPMap(args.length > 0 ? args[0] : "tenpoints.txt");
         TSPGraph graph = new TSPGraph();
 
         graph.MST(map);
         graph.TSP(map);
-        // System.out.println(graph.isValidTour(map));
-        // System.out.println(graph.tourDistance(map));
+        System.out.println(graph.isValidTour(map));
+        System.out.println(graph.tourDistance(map));
     }
 }
