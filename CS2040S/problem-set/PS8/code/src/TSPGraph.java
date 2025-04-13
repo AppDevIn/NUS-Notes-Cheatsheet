@@ -37,45 +37,50 @@ public class TSPGraph implements IApproximateTSP {
     @Override
     public void MST(TSPMap map) {
         this.map = map;
-        int n = map.getCount(); // number of points
-        parent = new int[n];    // store MST parent links
-        boolean[] visited = new boolean[n];
+        int vertax = map.getCount();
+        parent = new int[vertax];
+        boolean[] visited = new boolean[vertax];
 
-        // Create a priority queue (min heap) ordered by node weight
-        PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
+        PriorityQueue<Node> priorityQueue = new PriorityQueue<>(new NodeComparator());
 
-        // Add all nodes to the queue with default weights
-        Node[] nodes = new Node[n];
-        for (int i = 0; i < n; i++) {
-            nodes[i] = new Node(i, (i == 0) ? 0 : Double.POSITIVE_INFINITY); // start with node 0
-            pq.add(nodes[i]);
+        Node[] nodes = new Node[vertax];
+        for (int i = 0; i < vertax; i++) {
+            nodes[i] = new Node(i, (i == 0) ? 0 : Double.POSITIVE_INFINITY);
+            priorityQueue.add(nodes[i]);
         }
 
-        while (!pq.isEmpty()) {
-            Node curr = pq.poll();       // pick node with smallest weight
-            int u = curr.getId();
-            visited[u] = true;           // mark it visited
+        PriorityQueue<Node> dupPriorityQueue = new PriorityQueue<>(new NodeComparator());
 
-            for (Node neighbor : pq) {  // loop through all remaining nodes in PQ
+        while (!priorityQueue.isEmpty()) {
+            Node curr = priorityQueue.poll();
+            int u = curr.getId();
+            visited[u] = true;
+
+            for (Node neighbor : priorityQueue) {
                 int v = neighbor.getId();
                 double dist = map.pointDistance(u, v);
                 if (!visited[v] && dist < neighbor.getWeight()) {
-                    neighbor.setWeight(dist); // update the weight
-                    parent[v] = u;            // set parent link
+                    neighbor.setWeight(dist);
+                    parent[v] = u;
 
-                    // Since Java’s PQ doesn’t auto-update weights, reinsert manually:
-                    pq.remove(neighbor);
-                    pq.add(neighbor);
+
+
                 }
+                dupPriorityQueue.add(neighbor);
+            }
+
+            priorityQueue.clear();
+            int containerSize = dupPriorityQueue.size();
+            for (int i = 0; i < containerSize; i++) {
+                priorityQueue.add(dupPriorityQueue.poll());
             }
         }
 
-        // Link the nodes in the map to form MST
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < vertax; i++) {
             map.setLink(i, parent[i], false);
         }
 
-        map.setLink(0, 0, false); // just for completeness
+        map.setLink(0, 0, false);
         map.redraw();
     }
 
@@ -100,7 +105,7 @@ public class TSPGraph implements IApproximateTSP {
     }
 
     public static void main(String[] args) {
-        TSPMap map = new TSPMap(args.length > 0 ? args[0] : "../hundredpoints.txt");
+        TSPMap map = new TSPMap(args.length > 0 ? args[0] : "fiftypoints.txt");
         TSPGraph graph = new TSPGraph();
 
         graph.MST(map);
