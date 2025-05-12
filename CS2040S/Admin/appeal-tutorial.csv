@@ -1,0 +1,70 @@
+Matric,Add,Drop,Comments
+A0300426W,,,"Reject: Balance reasons, find someone to swap or resubmit appeal and hope someone wants it later"
+A0307974R,,,"Reject: Balance reasons, find someone to swap or resubmit appeal and hope someone wants it later"
+A0310470W,,,Rejected: 404 swap partner
+A0308045L,,,Reject: Balance reasons
+A0309552A,,,Rejected: 404 swap partner
+A0305711R,,,Reject: Put more slots.
+A0300705W,,,Reject: Balance reasons
+A0308225L,,N/S,"Reject: Timetable clash, you didn't get the module"
+A0302023E,,,"Reject: timetable clash, partner did not get module"
+A0302804R,,,Reject: Balance reasons
+A0307591B,T07,T57,
+A0309082H,T31,T07,Balancing shift
+A0308675U,T37,T20,Venue swap
+A0308382A,T14,T21,Mutual swap
+A0307819W,T21,T14,Mutual swap
+A0300791L,T26,T10,Mutual swap
+A0308345E,T10,T26,Mutual swap
+A0308436A,T63,T34,Mutual swap
+A0292009H,T34,T63,Mutual swap
+A0305857W,T58,T56,Mutual swap
+A0291780X,T56,T58,Mutual swap
+A0291899B,T22,T54,Mutual swap
+A0308072L,T54,T22,Mutual swap
+A0307516H,T59,T35,
+A0299959R,T35,T59,
+A0303046U,T41,T58,
+A0308875N,T58,T41,
+A0292018H,T45,T12,
+A0291743Y,T12,T28,
+A0302803U,T28,T45,
+A0307998E,T55,N/S,
+A0299940L,T20,T27,
+A0308802J,T65,N/S,
+A0307072M,T57,T49,
+A0305778R,T52,N/S,
+A0308183E,T08,T65,
+A0303074R,T19,N/S,
+A0302810X,T19,N/S,
+A0312351W,T27,N/S,
+A0307525H,T04,N/S,
+A0308147E,T01,T37,
+A0303213B,T65,N/S,
+A0305508J,T55,N/S,
+A0307917X,T12,T55,
+A0308811J,T49,T65,
+A0307578R,T01,N/S,
+A0309214M,T61,T29,
+A0303223Y,T21,T29,
+A0308732E,T29,T21,
+A0299837B,T29,T50,
+A0307362J,T22,T61,
+A0312011J,T50,N/S,
+A0303083R,T35,T33,
+A0309093A,T65,T02,
+A0299771H,T09,T19,
+A0308974N,T65,T36,
+A0308893N,T33,T47,
+A0307667U,T50,T52,
+A0308918U,T60,T11,
+A0288551U,T34,N/S,
+A0291732A,T05,T21,Mutual swap
+A0302630X,T21,T05,Mutual swap
+A0308251M,T29,N/S,
+A0308183E,T16,T65,
+A0308786M,T31,T60,Manual allocation
+A0300799W,T52,T18,Email swap appeal
+A0301126Y,T18,T52,Email swap appeal
+A0299806J,T18,T44,Email swap appeal
+A0308026M,T44,T18,Email swap appeal

@@ -1,0 +1,42 @@
+Matric,Add,Drop,Remarks
+A0308918U,,,Appeal withdrawn
+A0308893N,,,Appeal canceled (telegram)
+A0311780L,,,Appeal withdrawn
+A0309094B,,,Reject mass leave
+A0302619J,,,Reject mass leave
+A0309230R,,,Reject mass leave
+a0300192w,,,Reject mass leave
+A0302023E,,,Reject mass leave
+A0302919A,,,Already allocated last round (R19)
+A0303213B,,,You already have R14?
+A0307871Y,,,Too unbalanced
+A0300761R,,,Looks like cancelled
+A0311887W,,,???? no change?
+A0301907L,,,Other guy already got his R15 slot.
+A0310918H,,,You ALREADY got R15
+A0309103U,,,Reject: Not enough space
+A0309160M,,,"READ INSTRUCTIONS, AXXXXXXX
+Your 2pm-3pm clashes with IS1108
+After that, rejected, balance reasons."
+A0302642R,R14,R13,Mutual swap
+A0292071J,R13,R14,Mutual swap
+A0303017X,R14,R13,
+A0305780E,R20,R04,
+A0306850H,R04,R20,
+A0300066W,R09,N/S,
+A0309461E,R16,N/S,
+A0301555M,R16,R09,
+A0307897J,R17,R22,
+A0292688H,R01,N/S,
+A0309070M,R03,N/S,"This is what it was initially.
+A0309070M        FRI 1PM-2PM        R14        Course allocation is unsuccessful. R-R14-5355 class timetable conflicts with allocated course IS1108 (L-L2-9252) - Digital Ethics and Data Privac."
+A0308691X,R12,R10,
+A0308720L,R10,R21,
+A0292060M,R21,R04,
+A0308300X,R03,N/S,
+A0287733R,R05,R08,
+A0308881W,R01,R15,
+A0292009H,R15,R01,
+A0302774E,R13,N/S,
+A0300410J,,N/S,Seems to have dropped the module
+A0309082H,R17,R16,
