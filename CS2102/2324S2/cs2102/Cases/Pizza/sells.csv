@@ -1,0 +1,58 @@
+sells
+rname,pizza,price
+Text,Text,Integer
+Bella Italia,Margherita,10
+Bella Italia,Veggie,11
+Bella Italia,Pepperoni,12
+Bella Italia,Hawaiian,13
+Bella Italia,BBQ Chicken,14
+Bella Italia,Four Cheese,15
+Bella Italia,Mushroom,16
+Sizzle Grill,BBQ Chicken,13
+Sizzle Grill,Supreme,15
+Sizzle Grill,Four Cheese,13
+Sizzle Grill,Mushroom,16
+Taste of Chicago,Margherita,12
+Taste of Chicago,Pepperoni,13
+Taste of Chicago,Hawaiian,14
+Taste of Chicago,Veggie,14
+Spice Palace,Veggie,13
+Spice Palace,Mushroom,14
+Spice Palace,Supreme,16
+Spice Palace,Four Cheese,16
+London Seafood Shack,Margherita,14
+London Seafood Shack,Pepperoni,15
+London Seafood Shack,Hawaiian,16
+London Seafood Shack,BBQ Chicken,17
+Toronto Tastes,Four Cheese,13
+Toronto Tastes,Veggie,14
+Toronto Tastes,BBQ Chicken,15
+Toronto Tastes,Mushroom,16
+Mumbai Masala,Pepperoni,14
+Mumbai Masala,Supreme,17
+Mumbai Masala,Mushroom,14
+Mumbai Masala,Hawaiian,17
+Parisian Boulangerie,Margherita,13
+Parisian Boulangerie,Hawaiian,14
+Parisian Boulangerie,Veggie,16
+Parisian Boulangerie,Pepperoni,16
+Hollywood Cafe,Margherita,13
+Hollywood Cafe,Veggie,14
+Hollywood Cafe,Hawaiian,15
+Hollywood Cafe,Pepperoni,15
+Windy City Eats,Pepperoni,13
+Windy City Eats,Mushroom,14
+Windy City Eats,Four Cheese,16
+Windy City Eats,Supreme,17
+Thames River Tavern,Supreme,15
+Thames River Tavern,Margherita,16
+Thames River Tavern,Pepperoni,17
+Thames River Tavern,Hawaiian,18
+Desert Diner,Hawaiian,15
+Desert Diner,BBQ Chicken,15
+Desert Diner,Mushroom,18
+Desert Diner,Margherita,18
+Down Under Delights,Four Cheese,16
+Down Under Delights,Veggie,17
+Down Under Delights,Pepperoni,18
+Down Under Delights,Supreme,19

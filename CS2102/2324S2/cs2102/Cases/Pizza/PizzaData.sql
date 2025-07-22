@@ -1,0 +1,141 @@
+/* customer data */
+INSERT INTO customer VALUES('Alice', 'New York City');
+INSERT INTO customer VALUES('Bob', 'Los Angeles');
+INSERT INTO customer VALUES('Emily', 'Chicago');
+INSERT INTO customer VALUES('Lucas', 'London');
+INSERT INTO customer VALUES('Isabella', 'New York City');
+INSERT INTO customer VALUES('Ethan', 'Toronto');
+INSERT INTO customer VALUES('Mia', 'Los Angeles');
+INSERT INTO customer VALUES('Alexander', 'Chicago');
+INSERT INTO customer VALUES('Ava', 'Paris');
+INSERT INTO customer VALUES('Daniel', 'London');
+INSERT INTO customer VALUES('Tom', 'London');
+INSERT INTO customer VALUES('Jerry', 'Paris');
+INSERT INTO customer VALUES('Mary', ' Canada');
+
+
+/* restaurant data */
+INSERT INTO restaurant VALUES('Bella Italia', 'New York City');
+INSERT INTO restaurant VALUES('Sizzle Grill', 'Los Angeles');
+INSERT INTO restaurant VALUES('Taste of Chicago', 'Chicago');
+INSERT INTO restaurant VALUES('Spice Palace', 'London');
+INSERT INTO restaurant VALUES('London Seafood Shack', 'London');
+INSERT INTO restaurant VALUES('Toronto Tastes', 'Toronto');
+INSERT INTO restaurant VALUES('Mumbai Masala', 'Mumbai');
+INSERT INTO restaurant VALUES('Parisian Boulangerie', 'Paris');
+INSERT INTO restaurant VALUES('Big Apple Bistro', 'New York City');
+INSERT INTO restaurant VALUES('Hollywood Cafe', 'Los Angeles');
+INSERT INTO restaurant VALUES('Windy City Eats', 'Chicago');
+INSERT INTO restaurant VALUES('Thames River Tavern', 'London');
+INSERT INTO restaurant VALUES('Desert Diner', 'Paris');
+INSERT INTO restaurant VALUES('Down Under Delights', 'New York City');
+
+
+/* pizza data */
+INSERT INTO pizza VALUES('Margherita');
+INSERT INTO pizza VALUES('Veggie');
+INSERT INTO pizza VALUES('Pepperoni');
+INSERT INTO pizza VALUES('BBQ Chicken');
+INSERT INTO pizza VALUES('Supreme');
+INSERT INTO pizza VALUES('Four Cheese');
+INSERT INTO pizza VALUES('Hawaiian');
+INSERT INTO pizza VALUES('Mushroom');
+
+
+/* likes data */
+INSERT INTO likes VALUES('Alice', 'Margherita');
+INSERT INTO likes VALUES('Alice', 'Veggie');
+INSERT INTO likes VALUES('Alice', 'Pepperoni');
+INSERT INTO likes VALUES('Alice', 'Mushroom');
+INSERT INTO likes VALUES('Bob', 'BBQ Chicken');
+INSERT INTO likes VALUES('Bob', 'Supreme');
+INSERT INTO likes VALUES('Bob', 'Four Cheese');
+INSERT INTO likes VALUES('Bob', 'Veggie');
+INSERT INTO likes VALUES('Emily', 'Hawaiian');
+INSERT INTO likes VALUES('Emily', 'Mushroom');
+INSERT INTO likes VALUES('Emily', 'BBQ Chicken');
+INSERT INTO likes VALUES('Lucas', 'Hawaiian');
+INSERT INTO likes VALUES('Lucas', 'Mushroom');
+INSERT INTO likes VALUES('Lucas', 'BBQ Chicken');
+INSERT INTO likes VALUES('Isabella', 'Margherita');
+INSERT INTO likes VALUES('Isabella', 'Veggie');
+INSERT INTO likes VALUES('Isabella', 'Four Cheese');
+INSERT INTO likes VALUES('Isabella', 'Pepperoni');
+INSERT INTO likes VALUES('Isabella', 'BBQ Chicken');
+INSERT INTO likes VALUES('Isabella', 'Supreme');
+INSERT INTO likes VALUES('Isabella', 'Hawaiian');
+INSERT INTO likes VALUES('Isabella', 'Mushroom');
+INSERT INTO likes VALUES('Ethan', 'Four Cheese');
+INSERT INTO likes VALUES('Ethan', 'Pepperoni');
+INSERT INTO likes VALUES('Ethan', 'Supreme');
+INSERT INTO likes VALUES('Ethan', 'Hawaiian');
+INSERT INTO likes VALUES('Mia', 'Pepperoni');
+INSERT INTO likes VALUES('Mia', 'Veggie');
+INSERT INTO likes VALUES('Alexander', 'Mushroom');
+INSERT INTO likes VALUES('Alexander', 'Veggie');
+INSERT INTO likes VALUES('Ava', 'BBQ Chicken');
+INSERT INTO likes VALUES('Ava', 'Mushroom');
+INSERT INTO likes VALUES('Ava', 'Supreme');
+INSERT INTO likes VALUES('Daniel', 'Supreme');
+INSERT INTO likes VALUES('Daniel', 'Pepperoni');
+INSERT INTO likes VALUES('Daniel', 'Hawaiian');
+INSERT INTO likes VALUES('Daniel', 'Mushroom');
+INSERT INTO likes VALUES('Daniel', 'Four Cheese');
+
+
+/* sells data */
+INSERT INTO sells VALUES('Bella Italia', 'Margherita', 10);
+INSERT INTO sells VALUES('Bella Italia', 'Veggie', 11);
+INSERT INTO sells VALUES('Bella Italia', 'Pepperoni', 12);
+INSERT INTO sells VALUES('Bella Italia', 'Hawaiian', 13);
+INSERT INTO sells VALUES('Bella Italia', 'BBQ Chicken', 14);
+INSERT INTO sells VALUES('Bella Italia', 'Four Cheese', 15);
+INSERT INTO sells VALUES('Bella Italia', 'Mushroom', 16);
+INSERT INTO sells VALUES('Sizzle Grill', 'BBQ Chicken', 13);
+INSERT INTO sells VALUES('Sizzle Grill', 'Supreme', 15);
+INSERT INTO sells VALUES('Sizzle Grill', 'Four Cheese', 13);
+INSERT INTO sells VALUES('Sizzle Grill', 'Mushroom', 16);
+INSERT INTO sells VALUES('Taste of Chicago', 'Margherita', 12);
+INSERT INTO sells VALUES('Taste of Chicago', 'Pepperoni', 13);
+INSERT INTO sells VALUES('Taste of Chicago', 'Hawaiian', 14);
+INSERT INTO sells VALUES('Taste of Chicago', 'Veggie', 14);
+INSERT INTO sells VALUES('Spice Palace', 'Veggie', 13);
+INSERT INTO sells VALUES('Spice Palace', 'Mushroom', 14);
+INSERT INTO sells VALUES('Spice Palace', 'Supreme', 16);
+INSERT INTO sells VALUES('Spice Palace', 'Four Cheese', 16);
+INSERT INTO sells VALUES('London Seafood Shack', 'Margherita', 14);
+INSERT INTO sells VALUES('London Seafood Shack', 'Pepperoni', 15);
+INSERT INTO sells VALUES('London Seafood Shack', 'Hawaiian', 16);
+INSERT INTO sells VALUES('London Seafood Shack', 'BBQ Chicken', 17);
+INSERT INTO sells VALUES('Toronto Tastes', 'Four Cheese', 13);
+INSERT INTO sells VALUES('Toronto Tastes', 'Veggie', 14);
+INSERT INTO sells VALUES('Toronto Tastes', 'BBQ Chicken', 15);
+INSERT INTO sells VALUES('Toronto Tastes', 'Mushroom', 16);
+INSERT INTO sells VALUES('Mumbai Masala', 'Pepperoni', 14);
+INSERT INTO sells VALUES('Mumbai Masala', 'Supreme', 17);
+INSERT INTO sells VALUES('Mumbai Masala', 'Mushroom', 14);
+INSERT INTO sells VALUES('Mumbai Masala', 'Hawaiian', 17);
+INSERT INTO sells VALUES('Parisian Boulangerie', 'Margherita', 13);
+INSERT INTO sells VALUES('Parisian Boulangerie', 'Hawaiian', 14);
+INSERT INTO sells VALUES('Parisian Boulangerie', 'Veggie', 16);
+INSERT INTO sells VALUES('Parisian Boulangerie', 'Pepperoni', 16);
+INSERT INTO sells VALUES('Hollywood Cafe', 'Margherita', 13);
+INSERT INTO sells VALUES('Hollywood Cafe', 'Veggie', 14);
+INSERT INTO sells VALUES('Hollywood Cafe', 'Hawaiian', 15);
+INSERT INTO sells VALUES('Hollywood Cafe', 'Pepperoni', 15);
+INSERT INTO sells VALUES('Windy City Eats', 'Pepperoni', 13);
+INSERT INTO sells VALUES('Windy City Eats', 'Mushroom', 14);
+INSERT INTO sells VALUES('Windy City Eats', 'Four Cheese', 16);
+INSERT INTO sells VALUES('Windy City Eats', 'Supreme', 17);
+INSERT INTO sells VALUES('Thames River Tavern', 'Supreme', 15);
+INSERT INTO sells VALUES('Thames River Tavern', 'Margherita', 16);
+INSERT INTO sells VALUES('Thames River Tavern', 'Pepperoni', 17);
+INSERT INTO sells VALUES('Thames River Tavern', 'Hawaiian', 18);
+INSERT INTO sells VALUES('Desert Diner', 'Hawaiian', 15);
+INSERT INTO sells VALUES('Desert Diner', 'BBQ Chicken', 15);
+INSERT INTO sells VALUES('Desert Diner', 'Mushroom', 18);
+INSERT INTO sells VALUES('Desert Diner', 'Margherita', 18);
+INSERT INTO sells VALUES('Down Under Delights', 'Four Cheese', 16);
+INSERT INTO sells VALUES('Down Under Delights', 'Veggie', 17);
+INSERT INTO sells VALUES('Down Under Delights', 'Pepperoni', 18);
+INSERT INTO sells VALUES('Down Under Delights', 'Supreme', 19);
