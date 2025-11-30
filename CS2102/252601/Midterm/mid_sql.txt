@@ -1,0 +1,56 @@
+Q08: For each country, print the number of drivers from that country. Sort the result by the number of drivers from most to least followed by the country name in ascending order. Exclude countries that have no driver.  Print the country name and corresponding number of drivers.
+
+SELECT country, COUNT(*) AS driver_count
+FROM drivers
+GROUP BY country
+ORDER BY driver_count DESC, country ASC;
+
+
+
+Q09:  Print the different drivers from the region of 'Asia' (note: You may use the constant 'Asia'). Output only the forename, surname, and country of the drivers. Sort the result in ascending order of forename. If there are ties, sort the ties in descending order of surname.
+
+SELECT d.forename, d.surname, d.country
+FROM drivers d, countries c
+WHERE d.country = c.name
+  AND c.region = 'Asia'
+ORDER BY d.forename ASC, d.surname DESC;
+
+
+
+Q10:  For each region, print the number of races in the region. Include the regions without any races. Output only the name of the region and the number of races. Sort the result in descending order of number of races followed by ascending order of region name.
+
+SELECT n.region, COUNT(r.date) AS race_count 
+FROM circuits c INNER JOIN races r ON r.circuit = c.name
+                RIGHT JOIN countries n ON c.country = n.name
+GROUP BY n.region
+ORDER BY race_count DESC, n.region ASC;
+
+
+
+Q11:  Find the different races for which all drivers that start the race successfully reach the finish. A driver starts the race if the driver appears in the results table. A driver finishes the race if the column position in the table results is not null. Exclude a race with no driver. Output only the name of the race and the name of the circuit where the race takes place. Sort the result in ascending order of date.
+
+Note that a race is identified by their date and not their name.
+
+SELECT rc.name, rc.circuit
+FROM races rc
+WHERE NOT EXISTS (
+    SELECT *
+    FROM results r
+    WHERE rc.date = r.race
+      AND r.position IS NULL
+)
+ORDER BY rc.date ASC;
+
+
+
+Q12:  Find the different circuits that have been used for the least number of races. A circuit is used in a race if it appears in the races table. Include circuits that have not been used (if any). Output only the circuit name and the number of times the circuit is used. Sort the result by the circuit name in ascending order.
+
+SELECT c.name, COUNT(r.circuit)
+FROM circuits c LEFT JOIN races r ON (c.name = r.circuit)
+GROUP BY c.name
+HAVING COUNT(r.circuit) <= ALL (
+	SELECT COUNT(r.circuit)
+	FROM circuits c LEFT JOIN races r ON (c.name = r.circuit)
+	GROUP BY c.name
+)
+ORDER BY c.name ASC;
